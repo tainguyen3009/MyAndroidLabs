@@ -3,4 +3,5 @@
     <string name="app_name">TaiAndroidLabs</string>
     <string name="hello_message">Xin Chao!!</string>
     <string name="button_message">Tui la cai nut</string>
+    <string name="edit_text">chu bien doi</string>
 </resources>
