@@ -5,33 +5,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.MainActivity"
     android:orientation="vertical"
     >
 
-    <TextView
+    <TextView android:id="@+id/textview"
         android:textSize="50dp"
-        android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_message"
       />
 
-    <Button
+    <Button android:id="@+id/Button"
         android:textSize="50dp"
-        android:id="@+id/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/button_message" />
 
-    <EditText
+    <EditText android:id="@+id/editext"
         android:textSize="40dp"
-        android:id="@+id/editext"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:layout_marginBottom="100dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/edit_text" />
 
+    <CheckBox
+        android:textSize="50dp"
+        android:text="I'm Check box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb" />
+
+    <Switch
+        android:textSize="50dp"
+        android:text="I'm Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sw" />
+
+    <RadioButton
+        android:textSize="50dp"
+        android:text="I'm Radio Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rb" />
+
+    <ImageView
+        android:id="@+id/imbtn"
+        android:src="@drawable/iconimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
