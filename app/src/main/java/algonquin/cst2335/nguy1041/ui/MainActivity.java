@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import algonquin.cst2335.nguy1041.R;
 import algonquin.cst2335.nguy1041.data.MainViewModel;
@@ -37,26 +39,40 @@ public class MainActivity extends AppCompatActivity {
         TextView mytext = binding.textview;
         Button b = binding.Button;
         EditText editText = binding.editext;
+        ImageButton imageButton = findViewById(R.id.imageButton);
 
         binding.cb.setOnCheckedChangeListener(
-                ( btn , onOrOff ) -> {
-                    viewModel.onOrOff.postValue(onOrOff);
+                ( compoundButton , isChecked ) -> {
+                    viewModel.onOrOff.postValue(isChecked);
+                    createDisplayContext("CheckBox", isChecked);
                 }
         );
 
         binding.sw.setOnCheckedChangeListener(
-                ( btn , onOrOff ) -> {
-                    viewModel.onOrOff.postValue(onOrOff);
+                ( compoundButton , isChecked ) -> {
+                    viewModel.onOrOff.postValue(isChecked);
+                    createDisplayContext("Switch", isChecked);
                 }
         );
 
         binding.rb.setOnCheckedChangeListener(
-                ( btn , onOrOff ) -> {
-                    viewModel.onOrOff.postValue(onOrOff);
+                ( compoundButton , isChecked ) -> {
+                    viewModel.onOrOff.postValue(isChecked);
+                    createDisplayContext("Radio Button", isChecked);
+
                 }
         );
 
-        binding.imbtn.setOnClickListener(clk -> { });
+        binding.imageButton.setOnClickListener(clk -> {
+            int width = clk.getWidth();
+            int height = clk.getHeight();
+
+            String message = "Width: " + width + " pixels\nHeight: " + height + "pixels";
+
+
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        });
+
         viewModel.onOrOff.observe(this, newValue -> {
             binding.cb.setChecked(newValue);
             binding.sw.setChecked(newValue);
@@ -81,6 +97,13 @@ public class MainActivity extends AppCompatActivity {
             viewModel.editString.postValue(editText.getText().toString());
 
         });
+
+
+    }
+
+    private void createDisplayContext(String buttonName, boolean isChecked) {
+        String cpMethod = buttonName + " is " + (isChecked ? "Checked " : " Unchecked");
+        Toast.makeText(this, cpMethod, Toast.LENGTH_SHORT).show();
     }
 }
 //            @Override
