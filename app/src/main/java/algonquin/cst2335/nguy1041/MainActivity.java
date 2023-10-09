@@ -3,11 +3,15 @@ package algonquin.cst2335.nguy1041;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+
+import java.io.File;
 
 import algonquin.cst2335.nguy1041.databinding.ActivityMainBinding;
 
@@ -21,7 +25,28 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        File mySandBox = getFilesDir(); // return where you can save files
+        String path = mySandBox.getAbsolutePath();
+
+        if (mySandBox.exists()){
+        // if yes, open it
+        } else {
+            // else close it
+        }
+
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+
+
+
         binding.loginButton.setOnClickListener( click->{
+            // prefs had loaded data
+            String emailFromFile = prefs.getString("LoginEmail","");
+            // get file editor:
+
+            SharedPreferences.Editor editor = prefs.edit();
+
+            binding.emailField.setText(emailFromFile);
+
             // do this when clicked:
             Intent newPage = new Intent(MainActivity.this ,SecondActivity.class);
             /*Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -38,9 +63,14 @@ public class MainActivity extends AppCompatActivity {
             String userInput = binding.emailField.getText().toString();
             newPage.putExtra("LoginEmail", userInput);
             newPage.putExtra("Age", 24.1); // double
-
-
             startActivity(newPage); // this will go to a new page
+
+            // put to disk:
+            editor.putString("LoginEmail", userInput); //go to disk
+            editor.putFloat("Age", 30.3f);
+            editor.apply();
+
+
         } );
       Log.w( "MainActivity", "In onCreate() - Loading Widgets" );
 

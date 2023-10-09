@@ -7,7 +7,7 @@
     tools:context=".SecondActivity">
 
     <Button
-        android:id="@+id/buttonPage2"
+        android:id="@+id/phoneButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -51,12 +51,12 @@
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/picButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="Change Picture"
-        app:layout_constraintEnd_toEndOf="@+id/buttonPage2"
-        app:layout_constraintStart_toStartOf="@+id/buttonPage2"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPage2" />
+        app:layout_constraintEnd_toEndOf="@+id/phoneButton"
+        app:layout_constraintStart_toStartOf="@+id/phoneButton"
+        app:layout_constraintTop_toBottomOf="@+id/phoneButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
