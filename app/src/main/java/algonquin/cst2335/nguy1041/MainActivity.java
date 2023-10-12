@@ -36,16 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
 
-
+        String emailFromFile = prefs.getString("LoginEmail","");
+        binding.emailField.setText(emailFromFile);
 
         binding.loginButton.setOnClickListener( click->{
             // prefs had loaded data
-            String emailFromFile = prefs.getString("LoginEmail","");
+
             // get file editor:
 
             SharedPreferences.Editor editor = prefs.edit();
 
-            binding.emailField.setText(emailFromFile);
+
 
             // do this when clicked:
             Intent newPage = new Intent(MainActivity.this ,SecondActivity.class);
@@ -59,16 +60,19 @@ public class MainActivity extends AppCompatActivity {
             }
             startActivity( cameraIntent );*/
 
-
             String userInput = binding.emailField.getText().toString();
-            newPage.putExtra("LoginEmail", userInput);
-            newPage.putExtra("Age", 24.1); // double
-            startActivity(newPage); // this will go to a new page
 
             // put to disk:
             editor.putString("LoginEmail", userInput); //go to disk
             editor.putFloat("Age", 30.3f);
             editor.apply();
+
+
+            newPage.putExtra("LoginEmail", userInput);
+            //newPage.putExtra("Age", 24.1); // double
+            startActivity(newPage); // this will go to a new page
+
+;
 
 
         } );

@@ -33,9 +33,10 @@ public class SecondActivity extends AppCompatActivity {
         // get variable
         Intent newPage = getIntent();
         String userInput = newPage.getStringExtra("LoginEmail"); // default is null
-        double age = newPage.getDoubleExtra("Age", 0.0);
-        int houseNumber = newPage.getIntExtra("Address", 98);
+       // double age = newPage.getDoubleExtra("Age", 0.0);
+       // int houseNumber = newPage.getIntExtra("Address", 98);
 
+        binding.textView3.setText("Welcome " + userInput);
         binding.phoneButton.setOnClickListener(click -> {
             String phoneNumber = binding.editTextPhone.getText().toString();
             Intent call = new Intent(Intent.ACTION_DIAL);
