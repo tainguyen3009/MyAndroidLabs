@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordText;
 
     /**
-     * This is the starting point for MainActivity
      *
      * @param savedInstanceState If the activity is being re-initialized after
      * previously being shut down then this bundle contains the data it most 
