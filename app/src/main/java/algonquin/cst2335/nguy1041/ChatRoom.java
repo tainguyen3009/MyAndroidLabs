@@ -23,7 +23,7 @@ public class ChatRoom extends AppCompatActivity {
 
 
     ActivityChatRoomBinding binding;
-    RecyclerView.Adapter myAdapter;
+    RecyclerView.Adapter myAdapter = null;
     ArrayList<String> theMessages = null;
 
     @Override
@@ -38,16 +38,16 @@ public class ChatRoom extends AppCompatActivity {
 
 
         binding.addSomeThing.setOnClickListener(click -> {
-            theMessages.add(binding.newMessage.getText().toString());
-
+            String newMessage = binding.newMessage.getText().toString();
+            theMessages.add(newMessage);
             binding.newMessage.setText("");
-            myAdapter.notifyItemInserted(theMessages.size()-1);
 
+            myAdapter.notifyDataSetChanged();
         });
 
         //create row 0 to ..
         binding.myRecyclerView.setAdapter(
-                new RecyclerView.Adapter<MyRowHolder>() {
+                myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
 
                     // just inflate the xml
                     @NonNull
@@ -79,7 +79,7 @@ public class ChatRoom extends AppCompatActivity {
                     public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                         //replace the default text  with text at row position
                         String forRow = theMessages.get(position);
-                        holder.message.setText("Text for row " + position);
+                        holder.message.setText(forRow);
                         holder.time.setText("Time for row " + position);
 
                     }
