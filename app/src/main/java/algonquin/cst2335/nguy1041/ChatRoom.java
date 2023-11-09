@@ -108,6 +108,9 @@ public class ChatRoom extends AppCompatActivity {
                                 ChatMessage removedMessage = messages.get(position);
                                 messages.remove(position);
                                 myAdapter.notifyItemRemoved(position);
+                                thread.execute(() -> {
+                                    mDAO.deleteMessage(removedMessage);
+                   });
 
                                 Snackbar.make(messageText, "You deleted message #" + position, Snackbar.LENGTH_LONG)
                                         .setAction("Undo", c -> {
