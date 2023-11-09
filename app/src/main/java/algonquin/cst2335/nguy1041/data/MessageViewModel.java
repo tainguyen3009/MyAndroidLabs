@@ -1,19 +1,11 @@
 package algonquin.cst2335.nguy1041.data;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
-public class MessageViewModel extends ViewModel {
-    public ArrayList<String> theMessages = new java.util.ArrayList<>();
-    String message;
-    String timeSent;
-    boolean isSentButton;
+import algonquin.cst2335.nguy1041.ChatRoom;
 
-    void ChatRoom(String m, String t, boolean sent)
-    {
-        message = m;
-        timeSent = t;
-        isSentButton = sent;
-    }
-}
+public class MessageViewModel extends ViewModel {
+    public MutableLiveData<ArrayList<ChatRoom.ChatMessage>> messages = new MutableLiveData<>();}
