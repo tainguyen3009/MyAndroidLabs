@@ -35,5 +35,17 @@ public class ChatMessage {
         public boolean isSentButton(){
             return sendOrReceive;
         }
+
+        public void setSentButton(boolean sentButton) {
+            sendOrReceive = sentButton;
+        }
+    public void setTimeSent(String timeSent) {
+        this.timeSent = timeSent;
+    }
+    public void setMessage(String message) {
+        this.text = message;
+    }
+
+
     }
 
