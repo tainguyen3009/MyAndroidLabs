@@ -2,11 +2,15 @@ package algonquin.cst2335.nguy1041;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +53,8 @@ public class ChatRoom extends AppCompatActivity {
 
         MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "database-name").build();
         mDAO = db.cmDAO();
+
+        setSupportActionBar(binding.myToolbar);
 
         binding.button.setOnClickListener(click -> {
             String messageText = binding.textInput.getText().toString();
@@ -187,6 +195,79 @@ public class ChatRoom extends AppCompatActivity {
             tx.commit();
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.itemDelete){
+            showDeleteMessage();
+        } else if ( itemId == R.id.itemAbout){
+            Toast.makeText(this, "Version 1.0, Created by Tai Nguyen", Toast.LENGTH_LONG);
+        }
+//        switch (item.getItemId()) {
+//            case R.id.itemDelete:
+//                showDeleteMessage();
+//                break;
+//            case R.id.itemAbout:
+//                Toast.makeText(this, "Version 1.0, created by Tai Nguyen", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
+        return true;
+    }
+
+    private void showDeleteMessage() {
+        if (chatModel.selectedMessage.getValue() != null) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to delete this message?")
+                    .setTitle("Delete")
+                    .setNegativeButton("No", (dialog, which) -> {
+                        // if "No" is clicked
+                    })
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // if "Yes" is clicked
+                        ChatMessage toDelete = chatModel.selectedMessage.getValue();
+                        if (toDelete != null) {
+                            Executor thread1 = Executors.newSingleThreadExecutor();
+                            thread1.execute(() -> {
+                                // delete from the database
+                                mDAO.deleteMessage(toDelete);
+                            });
+
+                            int position = messages.indexOf(toDelete);
+                            messages.remove(position); // remove from the array list
+                            myAdapter.notifyItemRemoved(position); // notify the adapter of the removal
+
+                            // give feedback: anything on the screen
+                            Snackbar.make(findViewById(android.R.id.content), "You deleted the message", Snackbar.LENGTH_LONG)
+                                    .setAction("Undo", (btn) -> {
+                                        Executor thread2 = Executors.newSingleThreadExecutor();
+                                        thread2.execute(() -> {
+                                            mDAO.insertMessage(toDelete);
+                                        });
+
+                                        messages.add(position, toDelete);
+                                        myAdapter.notifyItemInserted(position); // notify the adapter of the insertion
+                                    }).show();
+                        }
+                    });
+
+            builder.create().show();
+        }
+    }
+
+
+
 
     private String getCurrentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh:mm:ss a");
